@@ -1,6 +1,5 @@
 // Define UI elements
 let ui = {
-    timer: document.getElementById('timer'),
     robotState: document.getElementById('robot-state').firstChild,
     gyro: {
         container: document.getElementById('gyro'),
@@ -18,8 +17,13 @@ let ui = {
         readout: document.getElementById('example-readout').firstChild
     },
     autoSelect: document.getElementById('auto-select'),
-    armPosition: document.getElementById('arm-position')
+    armPosition: document.getElementById('arm-position'),
+
+    test: document.getElementById('timer')
 };
+
+ui.test.innerHTML = NetworkTables.getValue('/main/test');
+
 
 // Key Listeners
 
@@ -58,7 +62,7 @@ NetworkTables.addKeyListener('/SmartDashboard/example_variable', (key, value) =>
     ui.example.readout.data = 'Value is ' + value;
 });
 
-NetworkTables.addKeyListener('/robot/time', (key, value) => {
+NetworkTables.addKeyListener('/other/time', (key, value) => {
     // This is an example of how a dashboard could display the remaining time in a match.
     // We assume here that value is an integer representing the number of seconds left.
     ui.timer.textContent = value < 0 ? '0:00' : Math.floor(value / 60) + ':' + (value % 60 < 10 ? '0' : '') + value % 60;
